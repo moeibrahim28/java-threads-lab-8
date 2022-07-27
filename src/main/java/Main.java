@@ -28,9 +28,13 @@ public class Main {
         }
         System.out.println(futureList);
         System.out.println(countFinishedFutures(futureList));
+        ((ExecutorService) executor).shutdown();
     }
 
     public static int countFinishedFutures(List<Future> futures) {
-        return (int) futures.stream().filter(obj -> !obj.isCancelled()).filter(nonCancelled -> nonCancelled.isDone()).count();
+        return (int) futures.stream()
+                .filter(obj -> !obj.isCancelled())
+                .filter(nonCancelled -> nonCancelled.isDone())
+                .count();
     }
 }
