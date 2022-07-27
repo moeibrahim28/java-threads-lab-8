@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.concurrent.*;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
         List<Future> futureList = new ArrayList<>();
         for(int i=0; i<6; i++){
@@ -24,6 +24,12 @@ public class Main {
         futureList.get(3).cancel(true);
         futureList.get(4).cancel(true);
 
+
+        for(Future future: futureList) {
+            if (!future.isCancelled()) {
+                future.get();
+            }
+        }
         System.out.println(futureList);
         System.out.println(countFinishedFutures(futureList));
     }
